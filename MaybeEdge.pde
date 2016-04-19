@@ -1,21 +1,39 @@
 class MaybeEdge {
   PVector start, end, head, tail;
   float tHead, tTail, tHeadPrev, tTailPrev;
-  boolean tHeadOutbound, tTailOutbound;
+  boolean tHeadOutbound, tTailOutbound, mIsVisible;
   float tailLength, speed;
   int index;
-  
+
+  MaybeEdge() {
+    init(0);
+  }
+
   MaybeEdge(int index) {
-    this.index = index;
-    this.start = new PVector();
-    this.end = new PVector();
-    this.head = new PVector();
-    this.tail = new PVector();
+    init(index);
+  }
+
+  void init(int aIndex) {
+    index = aIndex;
+    start = new PVector();
+    end = new PVector();
+    head = new PVector();
+    tail = new PVector();
     
-    this.tHead = 0.0;
-    this.tTail = 0.0;
-    this.tailLength = 1.5;
-    this.speed = 0.2;
+    tHead = 0.0;
+    tTail = 0.0;
+    tailLength = 1.5;
+    speed = 0.2;
+
+    mIsVisible = true;
+  }
+
+  void setVisible(boolean visible) {
+    mIsVisible = visible;
+  }
+
+  boolean isVisible() {
+    return mIsVisible;
   }
   
   void setStart(float x, float y, float z) {
@@ -35,6 +53,8 @@ class MaybeEdge {
   }
 
   void update() {
+    if (!mIsVisible) return;
+
     float offsetHead = noise(frameCount * 0.1 + index) * 2 - 1;
     offsetHead *= 10;
     float offsetTail = noise(frameCount * 0.1 + index + 100) * 2 - 1;
@@ -56,6 +76,8 @@ class MaybeEdge {
   }
   
   void draw() {
+    if (!mIsVisible) return;
+    
     if (tHeadOutbound != tTailOutbound) {
      if (tHeadOutbound) {
        line(head.x, head.y, head.z, start.x, start.y, start.z);
