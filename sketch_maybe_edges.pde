@@ -107,30 +107,24 @@ void oscEvent(OscMessage theOscMessage) {
   else if (typetag.equals("b"))
     boolVal = theOscMessage.get(0).booleanValue();
   
-  if (addr.equals("/FromVDMX/Slider1")) {
-  }
-  else if (addr.equals("/FromVDMX/Slider2")) {
+  if (addr.equals("/FromVDMX/Slider5")) {
     maybeShapes[0].setAlpha(map(floatVal, 0, 1, 0, 255));
   }
-  else if (addr.equals("/FromVDMX/Slider3")) {
+  else if (addr.equals("/FromVDMX/Slider6")) {
     maybeShapes[1].setAlpha(map(floatVal, 0, 1, 0, 255));
   }
-  else if (addr.equals("/FromVDMX/Slider4")) {
+  else if (addr.equals("/FromVDMX/Slider7")) {
     maybeShapes[2].setAlpha(map(floatVal, 0, 1, 0, 255));
   }
-  else if (addr.equals("/FromVDMX/Slider5")) {
+  else if (addr.equals("/FromVDMX/Slider8")) {
     maybeShapes[3].setAlpha(map(floatVal, 0, 1, 0, 255));
   }
-  else if (addr.equals("/FromVDMX/Slider6")) {
+  else if (addr.equals("/FromVDMX/Pot8")) {
     maybeShapes[4].setAlpha(map(floatVal, 0, 1, 0, 255));
   }
-  else if (addr.equals("/FromVDMX/Slider7")) {
+  else if (addr.equals("/FromVDMX/Pot7")) {
     camDistance = map(floatVal, 0, 1, 100, 1000);
     cam.setDistance(camDistance);
-  }
-  else if (addr.equals("/FromVDMX/Slider8")) {
-  }
-  else if (addr.equals("/FromVDMX/S1")) {
   }
   else if (addr.equals("/FromVDMX/M1")) {
     randomizeRotation();
