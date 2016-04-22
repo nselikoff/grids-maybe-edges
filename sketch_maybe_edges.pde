@@ -15,6 +15,7 @@ MaybeShape maybeShapes[];
 
 float targetRotateX, targetRotateY, targetRotateZ;
 float camDistance;
+float bgAlpha = 255;
 
 //int screenWidth = 1280, screenHeight = 289;
 int screenWidth = 1920, screenHeight = 434;
@@ -25,7 +26,7 @@ void settings() {
 }
 
 void setup() {
-  server = new SyphonServer(this, "sketch_maybe_edges");
+  server = new SyphonServer(this, "maybe_edges");
 
   frameRate(60);
 
@@ -33,15 +34,14 @@ void setup() {
 
   Ani.init(this);  
 
-  camDistance = 1000;
+  camDistance = 100;
   cam = new PeasyCam(this, camDistance);
 
-  maybeShapes = new MaybeShape[5];
+  maybeShapes = new MaybeShape[4];
   maybeShapes[0] = new MaybeLineSegment(100);
-  maybeShapes[1] = new MaybeTriangle(100);
-  maybeShapes[2] = new MaybeSquare(100);
+  maybeShapes[1] = new MaybeSquare(100);
+  maybeShapes[2] = new MaybeTetrahedron(100);
   maybeShapes[3] = new MaybeCube(100);
-  maybeShapes[4] = new MaybeTetrahedron(100);
 
   targetRotateX = targetRotateY = targetRotateZ = 0;
 }
@@ -63,15 +63,15 @@ void draw() {
 
   update();
 
-  //background(0);
+  // background(0);
   cam.beginHUD();
-  fill(0, 8);
+  fill(0, bgAlpha);
   noStroke();
   rect(0, 0, width, height);
   cam.endHUD();
   
   stroke(255);
-  strokeWeight(1);
+  strokeWeight(1.0);
 
   for (int i = 0; i < maybeShapes.length; i++) {
     maybeShapes[i].draw();
@@ -120,17 +120,17 @@ void oscEvent(OscMessage theOscMessage) {
     maybeShapes[3].setAlpha(map(floatVal, 0, 1, 0, 255));
   }
   else if (addr.equals("/FromVDMX/Pot8")) {
-    maybeShapes[4].setAlpha(map(floatVal, 0, 1, 0, 255));
-  }
-  else if (addr.equals("/FromVDMX/Pot7")) {
-    camDistance = map(floatVal, 0, 1, 100, 1000);
-    cam.setDistance(camDistance);
+    bgAlpha = map(floatVal, 0, 1, 255, 8);
   }
   else if (addr.equals("/FromVDMX/M1")) {
     randomizeRotation();
   }
   else if (addr.equals("/FromVDMX/R1")) {
     resetRotation();
+  }
+  else if (addr.equals("/FromVDMX/S3")) {
+    camDistance = camDistance == 100 ? 1000 : 100;
+    cam.setDistance(camDistance);
   }
 
   // theOscMessage.print();

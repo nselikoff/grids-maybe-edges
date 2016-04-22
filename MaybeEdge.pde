@@ -23,7 +23,7 @@ class MaybeEdge {
     tHead = 0.0;
     tTail = 0.0;
     tailLength = 1.5;
-    speed = 0.2;
+    speed = 0.4;
 
     mIsVisible = true;
   }
@@ -56,9 +56,9 @@ class MaybeEdge {
     if (!mIsVisible) return;
 
     float offsetHead = noise(frameCount * 0.1 + index) * 2 - 1;
-    offsetHead *= 10;
+    offsetHead *= 3;
     float offsetTail = noise(frameCount * 0.1 + index + 100) * 2 - 1;
-    offsetTail *= 10;
+    offsetTail *= 3;
     
     head.x = lerp(start.x, end.x, tHead) + offsetHead;
     head.y = lerp(start.y, end.y, tHead) + offsetHead;
@@ -77,7 +77,7 @@ class MaybeEdge {
   
   void draw() {
     if (!mIsVisible) return;
-    
+
     if (tHeadOutbound != tTailOutbound) {
      if (tHeadOutbound) {
        line(head.x, head.y, head.z, start.x, start.y, start.z);

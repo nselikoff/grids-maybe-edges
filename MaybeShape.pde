@@ -7,7 +7,7 @@ class MaybeShape {
 
   MaybeShape() {
     mColor = color(255);
-    mAlpha = 255;
+    mAlpha = 0;
   }
 
   void update() {
